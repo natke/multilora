@@ -1,0 +1,5 @@
+.olive-cache/
+*.onnx
+*.onnx_adapter
+models
+adapters

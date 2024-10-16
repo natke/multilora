@@ -8,21 +8,31 @@
    pip install git+https://github.com/microsoft/olive
    ```
 
-2. Install ONNX Runtime nightly
-   
+2. Build and install ONNX Runtime generate()
+
+   TODO: replace this with 1.20 when it is released
+
    ```bash
+   git clone https://github.com/microsoft/onnxruntime-genai.git
+   cd onnxruntime-genai
+   python build.py
+   cd build\Windows\RelWithDebInfo\wheel
+   pip install *.whl
+
+3. Install ONNX Runtime nightly
+   
+   TODO: remove this step when 1.20 is released
+
+   ```bash
+   pip uninstall onnxruntime
    pip install --pre --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ ort-nightly
    ```
 
-3. Install other dependencies
+4. Install other dependencies
 
    ```bash
    pip install optimum peft
    ```
-
-4. Build and install ONNX Runtime generate()
-
-   
 
 5. Choose a model
 
@@ -37,19 +47,21 @@
    * [Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality](https://huggingface.co/Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality)
    * [Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality](https://huggingface.co/Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality)
 
-## Generate adapters in .onnx_adapter format
+## Generate model and adapters in ONNX format
 
+### Convert existing adapters into ONNX format
 
-### Convert an existing adapter into ONNX format
+Note the output path cannot have any period (`.`) characters.
 
-For the second adapter, we will use a pre-tuned adapter. Note the output path cannot have any period (`.`) characters.
-
-Note also that this step requires xxx GB of memory on the machine on which it is running.
+Note also that this step requires 37GB of memory on the machine on which it is running.
 
 ```bash
 olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct -a Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32
 ```
 
+```bash
+olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA\model -o models\Llama-3-1-8B-Instruct-LoRA\mutated -log_level 1
+```
 
 ```bash
 olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32
@@ -61,33 +73,7 @@ olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-
 
 ## Write your application
 
-```python
-model = og.Model("<model/path>")
-adapters = og.Adapters(model)
-adapters.load("adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality", "surfer-dude")
-adapters.load("adapters\Llama-1-8B-Instruct-Hillbilly-Personality", "hillbilly")
-
-tokenizer = og.Tokenizer(model)
-
-params = og.GeneratorParams(model)
-params.set_search_options(max_length=20)
-params.input_ids = tokenizer.encode("Tell me a little about yourself)
-
-generator = og.Generator(model, params)
-
-generator.set_active_adapter(adapters, "surfer-dude")
-
-while not generator.is_done():
-    generator.compute_logits()
-    generator.generate_next_token()
-
-   new_token = generator.get_next_tokens()[0]
-   print(tokenizer_stream.decode(new_token), end='', flush=True)
-
-generator.set_active_adapter(adapters, "hillbilly")
-
-```
-
+See [app.py](app.py)
 
 
 ## Appendix:

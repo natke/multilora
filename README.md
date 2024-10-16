@@ -11,14 +11,20 @@
 2. Install ONNX Runtime nightly
    
    ```bash
-   pip install --pre -index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ ort-nightly
+   pip install --pre --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ ort-nightly
    ```
 
-3. Build and install ONNX Runtime generate()
+3. Install other dependencies
+
+   ```bash
+   pip install optimum peft
+   ```
+
+4. Build and install ONNX Runtime generate()
 
    
 
-4. Choose a model
+5. Choose a model
 
    In this example we'll use [Llama-3-8b](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
 
@@ -26,23 +32,13 @@
    
 5. Locate datasets and/or existing adapters
 
-   In this example, we will use:
+   In this example, we will two pre-tuned adapters
 
-   * Dataset: [nampdn-ai/tiny-codes](https://huggingface.co/datasets/nampdn-ai/tiny-codes)
-   * Adapter: [Mikael110/llama-2-7b-guanaco-qlora](https://huggingface.co/Mikael110/llama-2-7b-guanaco-qlora) 
-
+   * [Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality](https://huggingface.co/Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality)
+   * [Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality](https://huggingface.co/Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality)
 
 ## Generate adapters in .onnx_adapter format
 
-### Fine-tune the model with a dataset
-
-For the first adapter, we will use ...
-
-TODO: this requires CUDA
-
-```bash
-olive finetune --method qlora -m meta-llama/Meta-Llama-3-8B -d nampdn-ai/tiny-codes --train_split "train[:4096]" --eval_split "train[4096:4224]" --text_template "### Language: {programming_language} \n### Question: {prompt} \n### Answer: {response}" --per_device_train_batch_size 16 --per_device_eval_batch_size 16 --max_steps 150 --logging_steps 50 -o adapters\tiny-codes
-```
 
 ### Convert an existing adapter into ONNX format
 
@@ -90,16 +86,19 @@ while not generator.is_done():
 
 generator.set_active_adapter(adapters, "hillbilly")
 
-while not generator.is_done():
-    generator.compute_logits()
-    generator.generate_next_token()
-
-   new_token = generator.get_next_tokens()[0]
-   print(tokenizer_stream.decode(new_token), end='', flush=True)
 ```
 
 
 
+## Appendix:
+
+### Fine-tune the model with a dataset
+
+TODO: this requires CUDA
+
+```bash
+olive finetune --method qlora -m meta-llama/Meta-Llama-3-8B -d nampdn-ai/tiny-codes --train_split "train[:4096]" --eval_split "train[4096:4224]" --text_template "### Language: {programming_language} \n### Question: {prompt} \n### Answer: {response}" --per_device_train_batch_size 16 --per_device_eval_batch_size 16 --max_steps 150 --logging_steps 50 -o adapters\tiny-codes
+```
 
 
 

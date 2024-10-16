@@ -55,21 +55,30 @@ Note the output path cannot have any period (`.`) characters.
 
 Note also that this step requires 37GB of memory on the machine on which it is running.
 
-```bash
-olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct -a Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32
-```
+1. Export the model to ONNX format
 
-```bash
-olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA\model -o models\Llama-3-1-8B-Instruct-LoRA\mutated -log_level 1
-```
+   Note: add --use_model_builder when this is ready
 
-```bash
-olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32
-```
+   ```bash
+   olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct -a Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32
+   python -m onnxruntime_genai.models.builder meta-llama/Llama-3.1-8B-Instruct -e cpu -p fp32 --extra_options config_only=true
+   ```
 
-```bash
-olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-1-8B-Instruct-Hillbilly-Personality --dtype float32
-```
+2. Mutate model
+
+   ```bash
+   olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA\model -o models\Llama-3-1-8B-Instruct-LoRA\mutated -log_level 1
+   ```
+
+3. Convert adapters to ONNX
+
+   ```bash
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32
+   ```
+
+   ```bash
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-1-8B-Instruct-Hillbilly-Personality --dtype float32
+   ```
 
 ## Write your application
 

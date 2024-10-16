@@ -1,12 +1,12 @@
 import onnxruntime_genai as og
 
-model = og.Model("models\Llama-3-1-8B-Instruct-LoRA\model")
+model = og.Model("models/Llama-3-1-8B-Instruct-LoRA/model")
 adapters = og.Adapters(model)
-adapters.load("adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality", "surfer-dude")
-adapters.load("adapters\Llama-1-8B-Instruct-Hillbilly-Personality", "hillbilly")
+adapters.load("adapters/Llama-1-8B-Instruct-Surfer-Dude-Personality", "surfer-dude")
+adapters.load("adapters/Llama-1-8B-Instruct-Hillbilly-Personality", "hillbilly")
 
 tokenizer = og.Tokenizer(model)
-tokenizer_stream = og.TokenizerStream(model)
+tokenizer_stream = og.TokenizerStream(model)cd ..\
 
 params = og.GeneratorParams(model)
 params.set_search_options(max_length=20)

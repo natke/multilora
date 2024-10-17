@@ -53,14 +53,14 @@
 
 Note the output path cannot have any period (`.`) characters.
 
-Note also that this step requires 37GB of memory on the machine on which it is running.
+Note also that this step requires 63GB of memory on the machine on which it is running.
 
 1. Export the model to ONNX format
 
    Note: add --use_model_builder when this is ready
 
    ```bash
-   olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32 --use_ort_genai
+   olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --torch_dtype float32 --use_ort_genai
    ```
 
 2. Mutate model

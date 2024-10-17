@@ -60,8 +60,7 @@ Note also that this step requires 37GB of memory on the machine on which it is r
    Note: add --use_model_builder when this is ready
 
    ```bash
-   olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct -a Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32
-   python -m onnxruntime_genai.models.builder meta-llama/Llama-3.1-8B-Instruct -e cpu -p fp32 --extra_options config_only=true
+   olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --dtype float32 --use_ort_genai
    ```
 
 2. Mutate model

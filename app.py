@@ -1,7 +1,7 @@
 import onnxruntime_genai as og
 import numpy as np
 
-model = og.Model("models/Llama-3-1-8B-Instruct-LoRA/mutated/model")
+model = og.Model("models/Llama-3-1-8B-Instruct-LoRA-int4/adapted/model")
 adapters = og.Adapters(model)
 adapters.load("adapters/Llama-1-8B-Instruct-Surfer-Dude-Personality.onnx_adapter", "surfer-dude")
 adapters.load("adapters/Llama-1-8B-Instruct-Hillbilly-Personality.onnx_adapter", "hillbilly")

@@ -72,7 +72,7 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 3. Adapt model
 
    ```bash
-   olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA\model -o models\Llama-3-1-8B-Instruct-LoRA\mutated -log_level 1
+   olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA-int4\model -o models\Llama-3-1-8B-Instruct-LoRA-int4\adapted -log_level 1
    ```
 
 4. Convert adapters to ONNX

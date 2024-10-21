@@ -63,13 +63,19 @@ Note also that this step requires 63GB of memory on the machine on which it is r
    olive capture-onnx-graph -m meta-llama/Llama-3.1-8B-Instruct --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality -o models\Llama-3-1-8B-Instruct-LoRA --torch_dtype float32 --use_ort_genai
    ```
 
-2. Mutate model
+2. (Optional) Quantize the model
+
+   ```bash
+   olive quantize -m Llama-3-1-8B-Instruct-LoRA\model --algorithm rtn --implementation matmul4 -o Llama-3-1-8B-Instruct-LoRA-int4
+   ```
+
+3. Adapt model
 
    ```bash
    olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA\model -o models\Llama-3-1-8B-Instruct-LoRA\mutated -log_level 1
    ```
 
-3. Convert adapters to ONNX
+4. Convert adapters to ONNX
 
    ```bash
    olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32

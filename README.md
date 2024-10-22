@@ -38,7 +38,7 @@
 
    In this example we'll use [Llama-3-8b](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
 
-   You need to register with Meta for a license to use this model. You can do this by accessing the above page, signing in, and registering for access. Access should be granted quickly.
+   You need to register with Meta for a license to use this model. You can do this by accessing the above page, signing in, and registering for access. Access should be granted quickly. Esnure that the huggingface-cli is installed (`pip install huggingface-hub[cli]`) and you are logged in via `huggingface-cli login`.
    
 5. Locate datasets and/or existing adapters
 

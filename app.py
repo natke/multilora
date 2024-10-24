@@ -17,6 +17,8 @@ generator = og.Generator(model, params)
 
 generator.set_active_adapter(adapters, "surfer-dude")
 
+print(f"[Surfer dude]: Tell me about yourself")
+
 while not generator.is_done():
     generator.compute_logits()
     generator.generate_next_token()
@@ -30,6 +32,8 @@ del generator
 generator = og.Generator(model, params)
 
 generator.set_active_adapter(adapters, "hillbilly")
+
+print(f"[Hillbilly]: Tell me about yourself")
 
 while not generator.is_done():
     generator.compute_logits()

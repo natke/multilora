@@ -77,7 +77,7 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 2. (Optional) Quantize the model
 
    ```bash
-   olive quantize -m Llama-3-1-8B-Instruct-LoRA\model --algorithm rtn --implementation matmul4 -o Llama-3-1-8B-Instruct-LoRA-int4
+   olive quantize -m models\Llama-3-1-8B-Instruct-LoRA\model --algorithm rtn --implementation matmul4 -o models\Llama-3-1-8B-Instruct-LoRA-int4
    ```
 
 3. Adapt model

@@ -36,11 +36,13 @@
 
 5. Downgrade torch
 
-   TODO: There is an export bug with torch 2.5.0
+   TODO: There is an export bug with torch 2.5.0 and an incompatibility with transformers>=4.45.0
 
    ```bash
    pip uninstall torch
    pip install torch==2.4
+   pip uninstall transformers
+   pip install transformers==4.44
    ```
    
 6. Choose a model

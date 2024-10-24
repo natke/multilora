@@ -12,7 +12,6 @@ tokenizer_stream = tokenizer.create_stream()
 params = og.GeneratorParams(model)
 params.set_search_options(max_length=100, past_present_share_buffer=False)
 params.input_ids = tokenizer.encode("Tell me a little about yourself")
-params.set_model_input("onnx::Neg_67", np.array(0, dtype=np.int64))
 
 generator = og.Generator(model, params)
 

@@ -34,13 +34,22 @@
    pip install optimum peft
    ```
 
-5. Choose a model
+5. Downgrade torch
+
+   TODO: There is an export bug with torch 2.5.0
+
+   ```bash
+   pip uninstall torch
+   pip install torch==2.4
+   ```
+   
+6. Choose a model
 
    In this example we'll use [Llama-3-8b](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
 
    You need to register with Meta for a license to use this model. You can do this by accessing the above page, signing in, and registering for access. Access should be granted quickly. Esnure that the huggingface-cli is installed (`pip install huggingface-hub[cli]`) and you are logged in via `huggingface-cli login`.
    
-5. Locate datasets and/or existing adapters
+7. Locate datasets and/or existing adapters
 
    In this example, we will two pre-tuned adapters
 

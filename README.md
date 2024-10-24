@@ -89,11 +89,11 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 4. Convert adapters to ONNX
 
    ```bash
-   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32 --quantize_int4
    ```
 
    ```bash
-   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-1-8B-Instruct-Hillbilly-Personality --dtype float32
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-1-8B-Instruct-Hillbilly-Personality --dtype float32 --quantize_int4
    ```
 
 ## Write your application

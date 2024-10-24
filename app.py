@@ -33,6 +33,7 @@ generator = og.Generator(model, params)
 
 generator.set_active_adapter(adapters, "hillbilly")
 
+print("\n")
 print(f"[Hillbilly]: Tell me about yourself")
 
 while not generator.is_done():

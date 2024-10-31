@@ -105,9 +105,13 @@ See [app.py](app.py)
 
 ## Appendix:
 
-### Fine-tune the model with a dataset
+### Fine-tune your own data
 
-TODO: this requires CUDA
+Note: this requires CUDA
+
+Use the `olive fine-tune` command: https://microsoft.github.io/Olive/features/cli.html#finetune
+
+Here is an example usage of the commmand:
 
 ```bash
 olive finetune --method qlora -m meta-llama/Meta-Llama-3-8B -d nampdn-ai/tiny-codes --train_split "train[:4096]" --eval_split "train[4096:4224]" --text_template "### Language: {programming_language} \n### Question: {prompt} \n### Answer: {response}" --per_device_train_batch_size 16 --per_device_eval_batch_size 16 --max_steps 150 --logging_steps 50 -o adapters\tiny-codes

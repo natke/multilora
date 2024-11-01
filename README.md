@@ -10,31 +10,23 @@
 
 2. Build and install ONNX Runtime generate()
 
-   TODO: replace this with 1.20 when it is released
+   TODO: replace this with `pip install onnxruntime-genai` when 0.5.0 is released
 
    ```bash
    git clone https://github.com/microsoft/onnxruntime-genai.git
    cd onnxruntime-genai
+   git checkout rel-0.5.0
    python build.py
    cd build\Windows\RelWithDebInfo\wheel
    pip install *.whl
 
-3. Install ONNX Runtime nightly
-   
-   TODO: remove this step when 1.20 is released
-
-   ```bash
-   pip uninstall onnxruntime
-   pip install --pre --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ onnxruntime
-   ```
-
-4. Install other dependencies
+3. Install other dependencies
 
    ```bash
    pip install optimum peft
    ```
 
-5. Downgrade torch
+4. Downgrade torch and transformers
 
    TODO: There is an export bug with torch 2.5.0 and an incompatibility with transformers>=4.45.0
 

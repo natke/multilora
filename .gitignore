@@ -3,3 +3,8 @@
 *.onnx_adapter
 models
 adapters
+c/include
+c/lib
+c/build
+*.zip
+onnxruntime-genai

@@ -1,5 +1,11 @@
 import onnx 
+import argparse
 
-m = onnx.load("models/Llama-3-1-8B-Instruct-LoRA-int4/adapted/model/model.onnx", load_external_data=False)
+parser = argparse.ArgumentParser(description='Check model inputs')
+parser.add_argument('model', type=str, help='Model path')
+
+model = parser.parse_args().model
+
+m = onnx.load(model, load_external_data=True)
 for i in m.graph.input:
     print(i.name)

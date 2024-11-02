@@ -11,8 +11,8 @@ parser.add_argument('-p', '--prompt', type=str, help='The user prompt to pass to
 args = parser.parse_args()
 
 model = og.Model(args.model)
-adapters = og.Adapters(model)
 if args.adapters:
+    adapters = og.Adapters(model)
     for adapter in args.adapters:
         adapters.load(adapter, adapter)
 

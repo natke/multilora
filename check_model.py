@@ -4,8 +4,8 @@ import argparse
 parser = argparse.ArgumentParser(description='Check model inputs')
 parser.add_argument('model', type=str, help='Model path')
 
-model = parser.parse_args().model
+args = parser.parse_args()
 
-m = onnx.load(model, load_external_data=True)
+m = onnx.load(args.model, load_external_data=True)
 for i in m.graph.input:
     print(i.name)

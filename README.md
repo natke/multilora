@@ -69,7 +69,7 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 2. (Optional) Quantize the model
 
    ```bash
-   olive quantize -m models\Llama-3-1-8B-Instruct-LoRA\model --algorithm rtn --implementation matmul4 -o models\Llama-3-1-8B-Instruct-LoRA-int4
+   olive quantize -m models\Llama-3-1-8B-Instruct-LoRA --algorithm rtn --implementation matmul4 -o models\Llama-3-1-8B-Instruct-LoRA-int4
    ```
 
 3. Adapt model
@@ -93,6 +93,11 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 ## Write your application
 
 See [app.py](app.py)
+
+## Call the application
+
+```bash
+python app.py -m models\Llama-3-1-8B-Instruct-LoRA-int4\adapted\model -a adapters\adapters\Llama-3.1-8B-Instruct-Hillbilly-Personality.onnx_adapter -t "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{input}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n" -s "You are a friendly chatbot" -p "Hi, how are you today?"
 
 
 ## Appendix:

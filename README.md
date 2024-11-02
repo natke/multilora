@@ -10,31 +10,23 @@
 
 2. Build and install ONNX Runtime generate()
 
-   TODO: replace this with 1.20 when it is released
+   TODO: replace this with `pip install onnxruntime-genai` when 0.5.0 is released
 
    ```bash
    git clone https://github.com/microsoft/onnxruntime-genai.git
    cd onnxruntime-genai
+   git checkout rel-0.5.0
    python build.py
    cd build\Windows\RelWithDebInfo\wheel
    pip install *.whl
 
-3. Install ONNX Runtime nightly
-   
-   TODO: remove this step when 1.20 is released
-
-   ```bash
-   pip uninstall onnxruntime
-   pip install --pre --index-url https://aiinfra.pkgs.visualstudio.com/PublicPackages/_packaging/ORT-Nightly/pypi/simple/ ort-nightly
-   ```
-
-4. Install other dependencies
+3. Install other dependencies
 
    ```bash
    pip install optimum peft
    ```
 
-5. Downgrade torch
+4. Downgrade torch and transformers
 
    TODO: There is an export bug with torch 2.5.0 and an incompatibility with transformers>=4.45.0
 
@@ -83,17 +75,19 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 3. Adapt model
 
    ```bash
-   olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA-int4\model -o models\Llama-3-1-8B-Instruct-LoRA-int4\adapted --log_level 1
+   olive generate-adapter -m models\Llama-3-1-8B-Instruct-LoRA-int4 -o models\Llama-3-1-8B-Instruct-LoRA-int4\adapted
    ```
 
 4. Convert adapters to ONNX
 
+   This steps assumes you quantized the model in Step 2. If you skipped step 2, then remove the `--quantize_int4` argument.
+
    ```bash
-   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-1-8B-Instruct-Surfer-Dude-Personality --dtype float32 --quantize_int4
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Surfer-Dude-Personality --output_path adapters\Llama-3.1-8B-Instruct-Surfer-Dude-Personality --dtype float32 --quantize_int4
    ```
 
    ```bash
-   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-1-8B-Instruct-Hillbilly-Personality --dtype float32 --quantize_int4
+   olive convert-adapters --adapter_path Coldstart/Llama-3.1-8B-Instruct-Hillbilly-Personality --output_path adapters\Llama-3.1-8B-Instruct-Hillbilly-Personality --dtype float32 --quantize_int4
    ```
 
 ## Write your application
@@ -103,9 +97,13 @@ See [app.py](app.py)
 
 ## Appendix:
 
-### Fine-tune the model with a dataset
+### Fine-tune your own data
 
-TODO: this requires CUDA
+Note: this requires CUDA
+
+Use the `olive fine-tune` command: https://microsoft.github.io/Olive/features/cli.html#finetune
+
+Here is an example usage of the commmand:
 
 ```bash
 olive finetune --method qlora -m meta-llama/Meta-Llama-3-8B -d nampdn-ai/tiny-codes --train_split "train[:4096]" --eval_split "train[4096:4224]" --text_template "### Language: {programming_language} \n### Question: {prompt} \n### Answer: {response}" --per_device_train_batch_size 16 --per_device_eval_batch_size 16 --max_steps 150 --logging_steps 50 -o adapters\tiny-codes

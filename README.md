@@ -3,22 +3,18 @@
 ## Setup
 
 1. Install Olive
+   
+   This installs Olive from main. Replace with version 0.8.0 when it is released.
 
    ```bash
    pip install git+https://github.com/microsoft/olive
    ```
 
-2. Build and install ONNX Runtime generate()
+2. Install ONNX Runtime generate()
 
-   TODO: replace this with `pip install onnxruntime-genai` when 0.5.0 is released
-
-   ```bash
-   git clone https://github.com/microsoft/onnxruntime-genai.git
-   cd onnxruntime-genai
-   git checkout rel-0.5.0
-   python build.py
-   cd build\Windows\RelWithDebInfo\wheel
-   pip install *.whl
+   ```
+   pip install onnxruntime-genai
+   ```
 
 3. Install other dependencies
 
@@ -37,13 +33,13 @@
    pip install transformers==4.44
    ```
    
-6. Choose a model
+5. Choose a model
 
    In this example we'll use [Llama-3-8b](https://huggingface.co/meta-llama/Meta-Llama-3-8B)
 
    You need to register with Meta for a license to use this model. You can do this by accessing the above page, signing in, and registering for access. Access should be granted quickly. Esnure that the huggingface-cli is installed (`pip install huggingface-hub[cli]`) and you are logged in via `huggingface-cli login`.
    
-7. Locate datasets and/or existing adapters
+6. Locate datasets and/or existing adapters
 
    In this example, we will two pre-tuned adapters
 
@@ -92,7 +88,7 @@ Note also that this step requires 63GB of memory on the machine on which it is r
 
 ## Write your application
 
-See [app.py](app.py)
+See [app.py](app.py) as an example.
 
 ## Call the application
 

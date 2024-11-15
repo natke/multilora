@@ -93,7 +93,7 @@ See [app.py](app.py) as an example.
 ## Call the application
 
 ```bash
-python app.py -m models\Llama-3-1-8B-Instruct-LoRA-int4\adapted\model -a adapters\adapters\Llama-3.1-8B-Instruct-Hillbilly-Personality.onnx_adapter -t "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{input}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n" -s "You are a friendly chatbot" -p "Hi, how are you today?"
+python app.py -m models\Llama-3-1-8B-Instruct-LoRA-int4\adapted\model -a adapters\Llama-3.1-8B-Instruct-Hillbilly-Personality.onnx_adapter -t "<|begin_of_text|><|start_header_id|>system<|end_header_id|>\n\n{system}<|eot_id|><|start_header_id|>user<|end_header_id|>\n\n{input}<|eot_id|><|start_header_id|>assistant<|end_header_id|>\n\n" -s "You are a friendly chatbot" -p "Hi, how are you today?"
 ```
 
 

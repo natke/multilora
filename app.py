@@ -36,9 +36,10 @@ params = og.GeneratorParams(model)
 params.set_search_options(max_length=2048, past_present_share_buffer=False)
 # This input is generated for transformers versions > 4.45
 #params.set_model_input("onnx::Neg_67", np.array(0, dtype=np.int64))
-params.input_ids = tokenizer.encode(prompt)
 
 generator = og.Generator(model, params)
+
+generator.append_tokens(tokenizer.encode(prompt))
 
 if args.adapters:
    for adapter in args.adapters:
@@ -46,7 +47,6 @@ if args.adapters:
       generator.set_active_adapter(adapters, adapter)
 
       while not generator.is_done():
-        generator.compute_logits()
         generator.generate_next_token()
 
         new_token = generator.get_next_tokens()[0]
